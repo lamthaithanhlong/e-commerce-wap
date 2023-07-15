@@ -22,3 +22,5 @@ class Cart {
         return JSON.parse(fs.readFileSync(path.join(__dirname, databaseFile),'utf-8'))
     }
 }
+let cart = new Cart()
+console.log(cart.getAllCart())
