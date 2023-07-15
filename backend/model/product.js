@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+const databaseFile = '../products.json';
+
 class Product{
     constructor(id, name, price, image) {
         this.id = id;
@@ -30,10 +34,9 @@ class Product{
     get image() {
         return this.image;
     }
-}
-
-class products{
-    constructor() {
-        
+    getAllProducts() {
+        const filePath = path.join(__dirname, databaseFile);
+        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
     }
 }
+console.log(new Product().getAllProducts())
