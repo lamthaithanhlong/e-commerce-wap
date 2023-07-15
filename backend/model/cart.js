@@ -1,7 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-const databaseFile = '../data.json'
-
 class Cart {
     constructor(id,createdTime,products,totalPrice) {
         this.id = id;
@@ -18,9 +14,18 @@ class Cart {
     get getProducts() {return this.products}
     get getTotalPrice() {return this.totalPrice}
     getAllCart() {
-        console.log(path.join(__dirname, databaseFile))
-        return JSON.parse(fs.readFileSync(path.join(__dirname, databaseFile),'utf-8'))
+        return {
+            id : this.getId,
+            createdTime : this.getCreatedTime,
+            products : this.getProducts,
+            totalPrice : this.getTotalPrice
+        }
+    }
+    addProductIntoCart(id,createdTime,products,totalPrice) {
+        this.setId = id
+        this.setCreatedTime = createdTime
+        this.setTotalPrice = totalPrice
+        return this.getId
     }
 }
-let cart = new Cart()
-console.log(cart.getAllCart())
+module.exports = Cart
