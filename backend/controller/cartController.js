@@ -17,5 +17,5 @@ class CartController {
 let cartController = new CartController()
 cartController.getCarts()
 cartController.saveCart("1","2","3","4")
-cart.getAllCart()
+console.log(cart.getAllCart())
 module.exports = CartController
