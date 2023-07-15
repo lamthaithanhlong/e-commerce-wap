@@ -1,27 +1,9 @@
-{
-    "cart":[
+{"data":[
     {
-        "id": "001",
-        "createdTime": "2023-07-13T01:34:39.303Z",
-        "product": [
-            {"productId": "001","name":"Laptop","price":700,"image":"https://example.com/laptop.png","quantity":1}
-        ]
+        "id": 1,
+        "name": "sofa"
     },
     {
-        "id": "002",
-        "createdTime": "2023-07-13T01:34:39.303Z",
-        "product": [
-            {"productId": "001","name":"Sofa","price":700,"image":"https://example.com/sofa.png","quantity":2}
-        ]
-    }
-    ],
-    "product":[
-        {
-            "prodcut_id": "001",
-            "name": "sofa"
-        }
-    ],
-    "order":[
         
-    ]
-}
+    }
+]}
