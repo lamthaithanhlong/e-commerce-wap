@@ -45,9 +45,7 @@ class ProductManager extends Product {
     saveProduct(updateContent) {
         fileSystem.saveFile(JSON.stringify(updateContent))
     }
-    // addProduct(product){
-    //     this.products.push(product);
-    // }
+    
     getAllProducts() {
         return JSON.parse(data);
     }
@@ -57,9 +55,5 @@ class ProductManager extends Product {
     removeProductById(id){
         this.products = this.products.filter(product => product.id !== id);
     }
-    // updateProductById(id,updatedProduct){
-    //     const index = this.products.findIndex(product => product.id === id);
-    //     this.products[index] = updatedProduct;
-    // }
 }
 module.exports = ProductManager
