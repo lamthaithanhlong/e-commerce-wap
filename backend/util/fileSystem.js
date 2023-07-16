@@ -1,24 +1,19 @@
 const fs = require('fs');
 const path = require('path');
-const databaseFile = '../cart.json'
 
 class FileSystem {
     #filename
     constructor(filename) {
-        this.#filename = filename;
+        this.#filename = path.join(__dirname, filename);
     }
     set setFilename(filename) {this.#filename = filename;}
     get getFilename() {return this.#filename}
-    saveFile(filename,updateContent) {
-        try {
-            console.log(JSON.stringify(updateContent))
-            fs.writeFileSync(filename,JSON.stringify(updateContent),'utf8')
-            console.log("saved")
-        } catch {
-            console.log("err")
-        }
+    saveFile(updateContent) {
+        return fs.writeFileSync(this.getFilename, updateContent, 'utf8')
     }
-    getFile(filename) {return (JSON.parse(fs.readFileSync(filename,'utf8')))}
+    getFile() {
+        return fs.readFileSync(this.getFilename, 'utf8')
+    }
 }
 const data = {
         "data": [

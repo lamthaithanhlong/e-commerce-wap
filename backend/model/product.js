@@ -1,42 +1,59 @@
-const fs = require('fs');
-const path = require('path');
-const databaseFile = '../products.json';
 
-class Product{
+const productsPath = '../data/products.json';
+const FileSystem = require('../util/fileSystem');
+const fileSystem = new FileSystem(productsPath);
+const data = fileSystem.getFile()
+
+class Product {
     constructor(id, name, price, image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
     }
-
-    set id(id) {
+    set setId(id) {
         this.id = id;
     }
-    set name(name) {
+    set setName(name) {
         this.name = name;
     }
-    set price(price) {
+    set setPrice(price) {
         this.price = price;
     }
-    set image(image) {
+    set setImage(image) {
         this.image = image;
     }
-    get id() {
+    get getId() {
         return this.id;
     }
-    get name() {
+    get getName() {
         return this.name;
     }
-    get price() {
+    get getPrice() {
         return this.price;
     }
-    get image() {
+    get getImage() {
         return this.image;
     }
+}
+
+class ProductManager extends Product {
+    constructor(id, name, price, image,products) {
+        super(id, name, price, image)
+        this.products = products;
+    }
+    saveProduct(updateContent) {
+        fileSystem.saveFile(JSON.stringify(updateContent))
+    }
+    
     getAllProducts() {
-        const filePath = path.join(__dirname, databaseFile);
-        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        return JSON.parse(data);
+    }
+    getProductById(id){
+        return this.products.find(product => product.id === id);
+    }
+    removeProductById(id){
+        this.products = this.products.filter(product => product.id !== id);
     }
 }
-console.log(new Product().getAllProducts())
+module.exports = ProductManager
