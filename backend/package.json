@@ -1,12 +1,17 @@
 {
-  "name": "e-commerce-wap",
+  "name": "homework-10-lamthaithanhlong",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "* Create an server from scratch using `npm` * Setup the server to run with `npm start` and `nodemon` * Use `express` and `express.Router` to implement the routes ## Implement APIs to support followings requests. Assume that the server is running on the port 3000. And the POST method should contain the data in the body as JSON object. * `GET http://localhost:3000/tasks`: Return all tasks * `POST http://localhost:3000/tasks/add-task`: Add the task into the backend and return the added task with status of 200 if success. Otherwise, return an error message `Cannot add this task`; * `POST http://localhost:3000/tasks/delete-task`: Delete the task in the backend and return the deleted task with status of 200 if success. Otherwise, return an error message `Cannot delete this task`; * `POST http://localhost:3000/tasks/update-task`: Update the task in the backend and return the updated task with status of 200 if success. Otherwise, return an error message `Cannot update this task`; ## Please add the needed middleware, error handling, and a handler for 404",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
 }
