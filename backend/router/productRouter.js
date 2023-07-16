@@ -3,20 +3,18 @@ const router = express.Router();
 const ProductController = require('../controller/productController');
 const productController = new ProductController()
 
-// Get all products
+// Get all products : http://localhost:3000/product
 router.get('/', async (req, res) => {
     await productController.getAllProducts().then(data => res.send(data))
 })
-// Remove a product by ID
+// Remove a product by ID : http://localhost:3000/product/009
 router.delete('/:productId',async (req, res) => {
     const productId = req.params.productId;
     await productController.removeProduct(productId).then(data => res.send(data))
 });
-
-// Select a product by ID
+// Select a product by ID : http://localhost:3000/product/009
 router.get('/:productId', async (req, res) => {
     const productId = req.params.productId;
     await productController.selectProduct(productId).then(data => res.send(data))
 });
-
 module.exports = router;
