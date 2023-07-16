@@ -15,12 +15,4 @@ class FileSystem {
         return fs.readFileSync(this.getFilename, 'utf8')
     }
 }
-const data = {
-        "data": [
-            {"title":"app","id":"2"}
-        ]
-}
-let fileSystem = new FileSystem()
-fileSystem.saveFile(path.join(__dirname,'../cart.json'),data)
-console.log(fileSystem.getFile('../cart.json'))
 module.exports = FileSystem
