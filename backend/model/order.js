@@ -1,4 +1,4 @@
-class Cart {
+class Order {
     constructor(id,createdTime,products,totalPrice) {
         this.id = id;
         this.createdTime = createdTime;
@@ -28,4 +28,4 @@ class Cart {
         return this.getId
     }
 }
-module.exports = Cart
+module.exports = Order

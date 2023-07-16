@@ -1,0 +1,29 @@
+class Customer {
+    constructor(id,name,username,phone,password) {
+        this.id = id
+        this.name = name
+        this.username = username
+        this.phone = phone
+        this.password = password
+    }
+    set setId(id) {this.id = id}
+    set setName(name) {this.name = name}
+    set setUsername(username) {this.username = username}
+    set setPhone(phone) {this.phone = phone}
+    set setPassword(password) {this.password = password}
+    get getId() {return this.id}
+    get getName() {return this.name}
+    get getUsername() {return this.username}
+    get getPhone() {return this.phone}
+    get getPassword() {return this.password}
+    getInfo() {
+        return {
+            id: this.getId,
+            name: this.getName,
+            username: this.getUsername,
+            phone: this.getPhone,
+            password: this.getPassword,
+        }
+    }
+}
+module.exports = Customer
