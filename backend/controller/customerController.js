@@ -7,20 +7,33 @@ const data = fileSystem.getFile
 class CustomerController {
     constructor() {}
     login(username,password) {
-        let info = {
-            username,
-            password
-        }
     return data
             .then(res => {
-                res.datacustomer.map((item) => {
+                let isSuccesful = false
+                res.customer.map((item) => {
+                    console.log(item.username == username && item.password == password)
                     if(item.username == username && item.password == password) {
-                        return 1
+                        isSuccesful = true
                     }
-                    return 0
                 })
-                console.log(res.customer)
-            }).catch(err => err)
+                return isSuccesful
+            }).catch(err => console.log(err))
+    }
+    register(id,name,username,phone,password) {
+        let item = {
+            id,
+            name,
+            username,
+            phone,
+            password,
+        }
+        return data
+            .then((res) => {
+                res.customer.push(item)
+                fileSystem.saveFile = res
+                return res
+            })
+            .catch((err) => {console.log(err)})
     }
 }
 module.exports = CustomerController
