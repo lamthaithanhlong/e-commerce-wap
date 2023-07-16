@@ -3,7 +3,7 @@
 # API
 - list of product /GET 
 - get one product /GET
-- add the quatity of selected product /PUT
-- display all product in the cart /GET
+- add the quatity of selected product /PUT *
+- display all product in the cart /GET *
 - submit the cart into server /post
 - show exsist order /GET

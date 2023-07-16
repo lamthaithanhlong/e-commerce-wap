@@ -22,4 +22,10 @@ router.post('/register',async(req,res,next) => {
     .catch(err => res.send(err))
 })
 
+router.get('/', async(req, res) => {
+    await customerController.listCustomer()
+    .then(data => res.send(data))
+    .catch(err => res.send(err))
+})
+
 module.exports = router

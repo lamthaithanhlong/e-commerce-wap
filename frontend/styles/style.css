@@ -51,3 +51,30 @@ button.active {
 #content {
   text-align: left;
 }
+
+#product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-item {
+  width: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-item img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.product-item h3 {
+  margin-top: 10px;
+}
+
+.product-item button {
+  margin-top: 10px;
+}

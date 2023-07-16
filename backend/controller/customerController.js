@@ -6,6 +6,10 @@ const data = fileSystem.getFile
 
 class CustomerController {
     constructor() {}
+    listCustomer() {
+        return data
+                .then(res => res).catch(err => console.log(err))
+        }
     login(username,password) {
     return data
             .then(res => {

@@ -1,65 +1,95 @@
-// Fetch user information from the server
-fetch('http://localhost:3000/user', {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
-.then(response => response.json())
-.then(user => {
-  // Replace the placeholders with user information
-  document.getElementById('username').textContent = user.name;
-//   document.getElementById('phoner').textContent = user.phone;
-})
-.catch(error => {
-  console.log('Error fetching user information:', error);
-});
-
-
-
-
-
-
-
-
-// Function to switch between different sections (Products, Cart, Orders)
-function switchSection(sectionId) {
-  // Hide all sections
-  const sections = document.getElementsByClassName("section");
-  for (let i = 0; i < sections.length; i++) {
-    sections[i].style.display = "none";
+class HomePage {
+  constructor() {
+    this.init();
   }
 
-  // Show the selected section
-  const selectedSection = document.getElementById(sectionId);
-  selectedSection.style.display = "block";
-
-  // Highlight the selected button
-  const buttons = document.getElementsByClassName("nav-button");
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].classList.remove("active");
+  init() {
+    this.fetchUserInformation();
+    this.attachEventListeners();
   }
-  const selectedButton = document.getElementById(sectionId + "Btn");
-  selectedButton.classList.add("active");
+
+  fetchUserInformation() {
+    fetch('http://localhost:3000/user', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(user => {
+        this.updateUsername(user.name);
+        // this.updatePhone(user.phone);
+      })
+      .catch(error => {
+        console.log('Error fetching user information:', error);
+      });
+  }
+
+  updateUsername(name) {
+    const usernameElement = document.getElementById('username');
+    if (usernameElement) {
+      usernameElement.textContent = name;
+    }
+  }
+
+  switchSection(sectionId) {
+    const sections = document.getElementsByClassName('section');
+    for (let i = 0; i < sections.length; i++) {
+      sections[i].style.display = 'none';
+    }
+
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+      selectedSection.style.display = 'block';
+    }
+
+    const buttons = document.getElementsByClassName('nav-button');
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove('active');
+    }
+
+    const selectedButton = document.getElementById(sectionId + 'Btn');
+    if (selectedButton) {
+      selectedButton.classList.add('active');
+    }
+  }
+
+  attachEventListeners() {
+    const self = this;
+
+    const productsBtn = document.getElementById('productsBtn');
+    if (productsBtn) {
+      productsBtn.addEventListener('click', function() {
+        window.location.href = 'product.html';
+        self.switchSection('products');
+      });
+    }
+
+    const cartBtn = document.getElementById('cartBtn');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', function() {
+        self.switchSection('cart');
+      });
+    }
+
+    const ordersBtn = document.getElementById('ordersBtn');
+    if (ordersBtn) {
+      ordersBtn.addEventListener('click', function() {
+        self.switchSection('orders');
+      });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function() {
+        // Remove the token from the session storage
+        // sessionStorage.removeItem("token");
+
+        // Redirect to login page
+        window.location.href = 'login.html';
+      });
+    }
+  }
 }
 
-// Event listeners for navigation buttons
-document.getElementById("productsBtn").addEventListener("click", function() {
-  switchSection("products");
-});
-
-document.getElementById("cartBtn").addEventListener("click", function() {
-  switchSection("cart");
-});
-
-document.getElementById("ordersBtn").addEventListener("click", function() {
-  switchSection("orders");
-});
-
-document.getElementById("logoutBtn").addEventListener("click", function() {
-    // Remove the token from the session storage
-    //sessionStorage.removeItem("token");
-    
-    // Redirect to login page
-    window.location.href = "login.html";
-});
+new HomePage();
