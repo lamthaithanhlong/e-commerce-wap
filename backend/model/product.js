@@ -2,7 +2,6 @@
 const productsPath = '../data/products.json';
 const FileSystem = require('../util/fileSystem');
 const fileSystem = new FileSystem(productsPath);
-const data = fileSystem.getFile()
 
 class Product {
     constructor(id, name, price, image) {
@@ -44,10 +43,6 @@ class ProductManager extends Product {
     }
     saveProduct(updateContent) {
         fileSystem.saveFile(JSON.stringify(updateContent))
-    }
-    
-    getAllProducts() {
-        return JSON.parse(data);
     }
     getProductById(id){
         return this.products.find(product => product.id === id);

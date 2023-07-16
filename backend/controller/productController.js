@@ -1,32 +1,40 @@
 const ProductManager = require('../model/product');
-const productManager = new ProductManager();
-const products = productManager.getAllProducts();
+const FileSystem = require('../util/fileSystem')
+const fileSystem = new FileSystem('../data/products.json');
+const data = fileSystem.getFile
 
-// Get all products
-exports.getAllProducts = (req, res) => {
-  return res.send(products);
-};
-
-// Remove a product by ID
-exports.removeProduct = (req, res) => {
-  const productId = req.params.productId;
-  for (let i = 0; i < products.length; i++) {
-    if(products[i].id == productId) {
-        products.splice(i, 1);
-    }
+class productController {
+  constructor() {}
+  // Get all products
+  getAllProducts() {
+    return data
   }
-  productManager.saveProduct(products)
-  return res.status(200).send(products);
-};
-
+// Remove a product by ID
+removeProduct(id) {
+  return data
+    .then((res) => {
+      res.map((item,index) => {
+        if(item.id == id) {
+            res.splice(index,1)
+          }
+        })
+        fileSystem.saveFile = res
+        return res
+    })
+    .catch(err => err)
+  };
 // get a product by ID
-exports.selectProduct = (req, res) => {
-  let target = {}
-  const productId = req.params.productId;
-  products.map((item) => {
-    if(item.id == productId) {
-      target = item
-    }
-  })
-  return res.status(200).send(target);
-};
+  selectProduct(id) {
+  return data
+    .then((res) => {
+      let target = {}
+      res.map((item) => {
+        if(item.id == id) {
+            target = item
+          }
+        })
+        return target
+    }).catch(err => err)
+  };
+}
+module.exports = productController

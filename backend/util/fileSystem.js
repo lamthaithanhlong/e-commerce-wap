@@ -2,17 +2,33 @@ const fs = require('fs');
 const path = require('path');
 
 class FileSystem {
-    #filename
     constructor(filename) {
-        this.#filename = path.join(__dirname, filename);
+        this.filename = filename;
     }
-    set setFilename(filename) {this.#filename = filename;}
-    get getFilename() {return this.#filename}
-    saveFile(updateContent) {
-        return fs.writeFileSync(this.getFilename, updateContent, 'utf8')
+    set setFilename(filename) {this.filename = filename;}
+    get getFilename() {return path.join(__dirname,this.filename)}
+    set saveFile(updateContent) {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(this.getFilename, JSON.stringify(updateContent), (err, data) => {
+                if(err) {
+                    reject(err)
+                } else {
+                    console.log("saved sucessfully")
+                    resolve(data)
+                }
+            })
+        })
     }
-    getFile() {
-        return fs.readFileSync(this.getFilename, 'utf8')
+    get getFile() {
+        return new Promise((resolve, reject) => {
+            fs.readFile(this.getFilename,'utf8', (err, data) => {
+                if(err) {
+                    reject(err)
+                } else {
+                    resolve(JSON.parse(data))
+                }
+            })
+        })
     }
 }
 module.exports = FileSystem

@@ -1,21 +1,35 @@
 const Cart = require('../model/cart')
-const File = require('../util/fileSystem')
+const FileSystem = require('../util/fileSystem')
 const cart = new Cart();
-const file = new File()
+const fileSystem = new FileSystem('../cart.json')
+const data = fileSystem.getFile
 
 class CartController {
     constructor() {}
     getCarts() {
-        return cart.getAllCart()
+        return data
+            .then((res) => {console.log(res)})
+            .catch((err) => {console.log(err)})
+    }
+    getAllProductsInCart() {
+        return data
+            .then((res) => {console.log(res.products)})
     }
     saveCart(id,createdTime,products,totalPrice) {
-        file.setFilename = "../cart.json"
-        let data = cart.addProductIntoCart(id,createdTime,products,totalPrice)
-        file.saveFile(file.getFilename,data)
+        let item = {
+            id,
+            createdTime,
+            products: [
+                products
+            ],
+            totalPrice
+        }
+        return data
+            .then(() => fileSystem.saveFile = item)
+            .catch((err) => {console.log(err)})
     }
 }
 let cartController = new CartController()
-cartController.getCarts()
-cartController.saveCart("1","2","3","4")
-console.log(cart.getAllCart())
+cartController.saveCart()
+cartController.getAllProductsInCart()
 module.exports = CartController
