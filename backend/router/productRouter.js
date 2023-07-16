@@ -4,7 +4,7 @@ const ProductController = require('../controller/productController');
 const productController = new ProductController()
 
 // Get all products
-router.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
     await productController.getAllProducts().then(data => res.send(data))
 })
 // Remove a product by ID
@@ -14,7 +14,7 @@ router.delete('/:productId',async (req, res) => {
 });
 
 // Select a product by ID
-router.get('/select/:productId', async (req, res) => {
+router.get('/:productId', async (req, res) => {
     const productId = req.params.productId;
     await productController.selectProduct(productId).then(data => res.send(data))
 });
