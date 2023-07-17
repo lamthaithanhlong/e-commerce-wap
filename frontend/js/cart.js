@@ -5,13 +5,28 @@ class CartPage {
     }
 
     init() {
-        this.fetchUserInformation();
+        this.getUserInformation();
         this.attachEventListeners();
         this.calculateCartTotal();
         this.renderCartItems();
+        this.highlightSelectedButton();
     }
 
-    fetchUserInformation() {
+    getUserInformation() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            document.getElementById('username').textContent = "Welcome, " + currentUser.name + "!";
+        } else {
+            document.getElementById('cart').textContent = "You are not allowed to access the page, Please login first.";
+            document.getElementById('logoutBtn').textContent = "Login"
+            document.getElementById('username').textContent = "You are logged out. Please log in again.";
+        }
+    }
+
+    generateUniqueId() {
+        const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const newId = (existingCartItems.length + 1).toString().padStart(3, '0');
+        return newId;
     }
 
     calculateCartTotal() {
@@ -22,14 +37,17 @@ class CartPage {
             let quantity = 0;
 
             this.cartItems.forEach((item) => {
-                console.log(item)
                 total += item.price * item.quantity;
                 quantity += item.quantity;
             });
-
-            totalPriceElement.textContent = `$${total.toFixed(2)}`;
-            totalQuantityElement.textContent = quantity.toString();
+            if(quantity != 0 && total != 0) {
+                totalPriceElement.textContent = `${total.toFixed(2)}`;
+                totalQuantityElement.textContent = quantity.toString();
+            } else {
+                document.getElementById('cart-total').textContent = "You don't have any items in the cart. Please take your time to add more items before proceeding with your purchase."
+            }
         }
+        localStorage.setItem('totalPrice', JSON.stringify(totalPriceElement.textContent));
     }
 
     updateCartItemQuantity(index, quantity) {
@@ -41,7 +59,38 @@ class CartPage {
     }
 
     saveCartItems() {
+        console.log("hello")
+        let totalPrice = JSON.parse(localStorage.getItem('totalPrice'))
+        let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id
+        const cartCheckOutInfo = {
+            "id": this.generateUniqueId(),
+            "createdTime": Date.now(),
+            "products": [this.cartItems],
+            "totalPrice": totalPrice,
+            "orderUserId": currentUserId
+        }
+        fetch('http://localhost:3000/order/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cartCheckOutInfo)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return console.log(response.json());
+                } else {
+                    throw new Error('Login request failed');
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log('Error occurred during login:', error);
+            });
         localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+        localStorage.setItem('cartCheckOutItems', JSON.stringify(cartCheckOutInfo));
     }
 
     renderCartItems() {
@@ -99,16 +148,28 @@ class CartPage {
         const selectedButton = document.getElementById(sectionId + 'Btn');
         if (selectedButton) {
             selectedButton.classList.add('active');
+            localStorage.setItem('selectedButton', sectionId)
+        }
+    }
+
+    highlightSelectedButton() {
+        const selectedButtonId = localStorage.getItem('selectedButton');
+        if (selectedButtonId) {
+            const selectedButton = document.getElementById(selectedButtonId + 'Btn');
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
         }
     }
     attachEventListeners() {
         const self = this;
 
         const checkoutBtn = document.getElementById('checkoutBtn')
-        if(checkoutBtn) {
-            checkoutBtn.addEventListener('click',function() {
-                localStorage.clear()
-                console.log("clear complete")
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function () {
+                self.saveCartItems()
+                localStorage.removeItem("cartCheckOutItems")
+                localStorage.removeItem("cartItems")
                 window.location.href = 'cart.html';
                 self.switchSection('cart');
             })

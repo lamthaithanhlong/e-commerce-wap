@@ -1,13 +1,55 @@
 class OrderPage {
     constructor() {
-        this.init()
+        this.init();
     }
+
     init() {
         this.attachEventListeners();
+        this.getUserInformation();
+        this.loadOrdersFromAPI();
+        this.highlightSelectedButton();
     }
-    loadDataFromLocalStorage() {
-        localStorage.getItem()
+
+    getUserInformation() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            document.getElementById('username').textContent = "Welcome, " + currentUser.name + "!";
+        } else {
+            document.getElementById('orders').textContent = "You are not allowed to access the page, Please login first.";
+            document.getElementById('logoutBtn').textContent = "Login"
+            document.getElementById('username').textContent = "You are logged out. Please log in again.";
+        }
     }
+
+    loadOrdersFromAPI() {
+        // Make a network request to fetch the orders from the API
+        fetch('http://localhost:3000/order')
+            .then(response => response.json())
+            .then(data => {
+                // Process the fetched orders data
+                this.displayOrders(data);
+            })
+            .catch(error => {
+                console.log('Error occurred while fetching orders:', error);
+            });
+    }
+
+    displayOrders(orders) {
+        const orderList = document.getElementById('orderList');
+        const orderUserId = JSON.parse(localStorage.getItem('currentUser')).id
+
+        const filteredOrders = orders.filter((order) => order.orderUserId === orderUserId);
+
+        orderList.innerHTML = '';
+
+        filteredOrders.forEach(order => {
+            const listItem = document.createElement('li');
+            const productsString = order.products.map(product => JSON.stringify(product)).join(', ');
+            listItem.textContent = `Order ID: ${order.id}, Created Time: ${order.createdTime}, Total Price: ${order.totalPrice}, Products: ${productsString}`;
+            orderList.appendChild(listItem);
+        });
+    }
+
     switchSection(sectionId) {
         const sections = document.getElementsByClassName('section');
         for (let i = 0; i < sections.length; i++) {
@@ -27,8 +69,20 @@ class OrderPage {
         const selectedButton = document.getElementById(sectionId + 'Btn');
         if (selectedButton) {
             selectedButton.classList.add('active');
+            localStorage.setItem('selectedButton', sectionId)
         }
     }
+
+    highlightSelectedButton() {
+        const selectedButtonId = localStorage.getItem('selectedButton');
+        if (selectedButtonId) {
+            const selectedButton = document.getElementById(selectedButtonId + 'Btn');
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+        }
+    }
+
     attachEventListeners() {
         const self = this;
 
@@ -76,4 +130,5 @@ class OrderPage {
         }
     }
 }
-new OrderPage()
+
+new OrderPage();

@@ -7,8 +7,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Welcome, <span id="username"></span>!</h1>
-      <!-- <p>Phone: <span id="phone"></span></p> -->
+      <h1 id="username"></h1>
       <div class="nav-buttons">
         <button id="homeBtn">Home</button>
         <button id="productsBtn">Products</button>
@@ -19,9 +18,8 @@
       <div id="cart" class="section">
         <h2>List of products in the cart</h2>
         <div id="cart-items">
-          <!-- Cart items will be dynamically added here -->
         </div>
-        <div class="cart-total">
+        <div id="cart-total">
           <span>Total Quantity:</span>
           <span id="totalQuantity">0</span>
           <span>Total Price:</span>

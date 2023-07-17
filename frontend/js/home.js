@@ -4,26 +4,23 @@ class HomePage {
   }
 
   init() {
-    this.fetchUserInformation();
+    this.getUserInformation();
     this.attachEventListeners();
+    this.highlightSelectedButton();
   }
 
-  fetchUserInformation() {
-    fetch('http://localhost:3000/user', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(user => {
-        this.updateUsername(user.name);
-        // this.updatePhone(user.phone);
-      })
-      .catch(error => {
-        console.log('Error fetching user information:', error);
-      });
-  }
+  getUserInformation() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+      document.getElementById('currentUserName').textContent = currentUser.username;
+      document.getElementById('currentUserPhone').textContent = currentUser.phone;
+      document.getElementById('username').textContent = "Welcome, "+currentUser.name+"!";
+    } else {
+      document.getElementById('home').textContent = "You are not allowed to access the page, Please login first.";
+      document.getElementById('logoutBtn').textContent = "Login"
+      document.getElementById('username').textContent = "You are logged out. Please log in again.";
+    }
+  }  
 
   updateUsername(name) {
     const usernameElement = document.getElementById('username');
@@ -37,20 +34,31 @@ class HomePage {
     for (let i = 0; i < sections.length; i++) {
       sections[i].style.display = 'none';
     }
-
+  
     const selectedSection = document.getElementById(sectionId);
     if (selectedSection) {
       selectedSection.style.display = 'block';
     }
-
+  
     const buttons = document.getElementsByClassName('nav-button');
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].classList.remove('active');
     }
-
+  
     const selectedButton = document.getElementById(sectionId + 'Btn');
     if (selectedButton) {
       selectedButton.classList.add('active');
+      localStorage.setItem('selectedButton', sectionId)
+    }
+  }
+
+  highlightSelectedButton() {
+    const selectedButtonId = localStorage.getItem('selectedButton');
+    if (selectedButtonId) {
+      const selectedButton = document.getElementById(selectedButtonId + 'Btn');
+      if (selectedButton) {
+        selectedButton.classList.add('active');
+      }
     }
   }
 
@@ -76,6 +84,7 @@ class HomePage {
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) {
       cartBtn.addEventListener('click', function() {
+        window.location.href = 'cart.html';
         self.switchSection('cart');
       });
     }
@@ -83,6 +92,7 @@ class HomePage {
     const ordersBtn = document.getElementById('ordersBtn');
     if (ordersBtn) {
       ordersBtn.addEventListener('click', function() {
+        window.location.href = 'order.html';
         self.switchSection('orders');
       });
     }

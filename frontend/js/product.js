@@ -4,9 +4,20 @@ class ProductPage {
     }
 
     init() {
-        this.cartItems = JSON.parse(localStorage.getItem('cartItems'))
         this.displayProducts();
         this.attachEventListeners();
+        this.getUserInformation()
+        this.highlightSelectedButton();
+    }
+    getUserInformation() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            document.getElementById('username').textContent = "Welcome, " + currentUser.name + "!";
+        } else {
+            document.getElementById('products').textContent = "You are not allowed to access the page, Please login first.";
+            document.getElementById('logoutBtn').textContent = "Login"
+            document.getElementById('username').textContent = "You are logged out. Please log in again.";
+        }
     }
     displayProducts() {
         const productList = document.getElementById('product-list');
@@ -81,6 +92,17 @@ class ProductPage {
         const selectedButton = document.getElementById(sectionId + 'Btn');
         if (selectedButton) {
             selectedButton.classList.add('active');
+            localStorage.setItem('selectedButton', sectionId)
+        }
+    }
+
+    highlightSelectedButton() {
+        const selectedButtonId = localStorage.getItem('selectedButton');
+        if (selectedButtonId) {
+            const selectedButton = document.getElementById(selectedButtonId + 'Btn');
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
         }
     }
     attachEventListeners() {
