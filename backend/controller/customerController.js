@@ -1,5 +1,6 @@
 const Customer = require('../model/customer')
 const FileSystem = require('../util/fileSystem')
+const bcrypt = require('bcrypt');
 const customer = new Customer()
 const fileSystem = new FileSystem('../data/customers.json')
 const data = fileSystem.getFile
@@ -24,8 +25,8 @@ class CustomerController {
             .then(res => {
                 let target = {}
                 res.map((item) => {
-                    console.log(item.username == username && item.password == password)
-                    if (item.username == username && item.password == password) {
+                    console.log(item.username == username && bcrypt.compareSync(password, item.password))
+                    if (item.username == username && bcrypt.compareSync(password, item.password)) {
                         target = item
                     }
                 })
@@ -33,12 +34,13 @@ class CustomerController {
             }).catch(err => console.log(err))
     }
     register(id, name, username, phone, password) {
+        const hashedPassword = bcrypt.hashSync(password, 10);
         let item = {
             id,
             name,
             username,
             phone,
-            password,
+            password: hashedPassword,
         }
         return data
             .then((res) => {
@@ -49,6 +51,7 @@ class CustomerController {
             .catch((err) => { console.log(err) })
     }
     generateUser() {
+        const hashedPassword = bcrypt.hashSync("default", 10);
         const newUserCount = 5;
         const newUserList = [];
 
@@ -66,8 +69,8 @@ class CustomerController {
                 id: generateUniqueID(i),
                 name: `Default User ${i+1}`,
                 username: generateUniqueUsername(i),
-                phone: "123",
-                password: "123",
+                phone: '',
+                password: hashedPassword,
             };
 
             newUserList.push(newUser);
