@@ -1,1 +1,20 @@
-[{"id":"009","name":"Printer","price":150,"image":"./images/printer.jpg"},{"id":"010","name":"Tablet","price":400,"image":"./images/tablet.jpg"}]
+[
+    {
+    "id": "008",
+    "name": "Camera",
+    "price": 150,
+    "image": "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+   },
+  {
+    "id": "009",
+    "name": "Printer",
+    "price": 150,
+    "image": "../images/printer.jpg"
+  },
+  {
+    "id": "010",
+    "name": "Tablet",
+    "price": 400,
+    "image": "./images/tablet.jpg"
+  }
+]

@@ -7,7 +7,6 @@ class ProductPage {
         this.displayProducts();
         this.attachEventListeners();
     }
-
     displayProducts() {
         const productList = document.getElementById('product-list');
         fetch('http://localhost:3000/product', {
@@ -23,7 +22,7 @@ class ProductPage {
                     productItem.classList.add('product-item');
 
                     const image = document.createElement('img');
-                    image.src = product.imageUrl;
+                    image.src = product.image;
                     image.alt = product.name;
 
                     const name = document.createElement('h3');
@@ -126,5 +125,4 @@ class ProductPage {
         }
     }
 }
-
 new ProductPage();
