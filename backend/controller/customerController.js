@@ -11,12 +11,8 @@ class CustomerController {
     }
 
     init() {
-        this.listCustomer().then((data) => {
-            if (data == '') {
-                this.generateUser();
-                console.log("Auto generate default user if empty");
-            }
-        });
+        this.generateUser();
+        console.log("Auto generate default users");
     }
 
     listCustomer() {
@@ -24,45 +20,25 @@ class CustomerController {
     }
 
     login(username, password) {
-        const customerData = this.customerModel;
-        customerData.setUsername = username;
-        customerData.setPassword = password;
         return data
             .then((res) => {
-                console.log(res)
-                let target = {};
-                res.map((item) => {
-                    if (
-                        item.username == username &&
-                        bcrypt.compareSync(password, item.password)
-                    ) {
-                        target = item;
-                    }
-                });
-                return target;
+                return res.find((item) => item.username === username && bcrypt.compareSync(password, item.password));
             })
             .catch((err) => console.log(err));
     }
 
     register(id, name, username, phone, password) {
-        const customerData = this.customerModel;
+        const hashPassword = bcrypt.hashSync(password, 10);
+        const customerData = { id, name, username, phone, password: hashPassword };
+
         return data
             .then((res) => {
                 const isIdExists = res.some((item) => item.id === id);
                 const isUsernameExists = res.some((item) => item.username === username);
 
-                console.log(isIdExists && customerData.getId === id)
-                console.log(isUsernameExists && customerData.getUsername === username)
-                if (isIdExists && customerData.getId === id) {
-                    throw new Error('ID already exists. Please choose a different ID.');
-                } else if (isUsernameExists && customerData.getUsername === username) {
-                    throw new Error('Username already exists. Please choose a different username.');
+                if (isIdExists || isUsernameExists) {
+                    throw new Error('ID or username already exists. Please choose a different ID or username.');
                 }
-                customerData.setId = id;
-                customerData.setName = name;
-                customerData.setUsername = username;
-                customerData.setPhone = phone;
-                customerData.setPassword = password;
 
                 res.push(customerData);
                 fileSystem.saveFile = res;
@@ -76,9 +52,8 @@ class CustomerController {
     generateUser() {
         const newUserCount = 5;
         const newUserList = [];
-        const password = "admin123"
-
-        const hashPassword = bcrypt.hashSync(password, 10)
+        const password = "admin123";
+        const hashPassword = bcrypt.hashSync(password, 10);
 
         const generateUniqueID = (index) => {
             const paddedIndex = String(index + 1).padStart(3, '0');
@@ -114,3 +89,4 @@ class CustomerController {
 }
 
 module.exports = CustomerController;
+

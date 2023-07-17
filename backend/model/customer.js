@@ -12,7 +12,6 @@ class Customer {
     set setUsername(username) { this.username = username }
     set setPhone(phone) { this.phone = phone }
     set setPassword(password) { 
-        console.log(password)
         this.password = bcrypt.hashSync(password, 10); 
     }
     get getId() { return this.id }
