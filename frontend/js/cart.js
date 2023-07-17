@@ -40,7 +40,7 @@ class CartPage {
                 total += item.price * item.quantity;
                 quantity += item.quantity;
             });
-            if(quantity != 0 && total != 0) {
+            if (quantity != 0 && total != 0) {
                 totalPriceElement.textContent = `${total.toFixed(2)}`;
                 totalQuantityElement.textContent = quantity.toString();
             } else {
@@ -54,7 +54,6 @@ class CartPage {
         if (quantity >= 1) {
             this.cartItems[index].quantity = quantity;
             this.calculateCartTotal();
-            this.saveCartItems();
         }
     }
 
@@ -62,9 +61,17 @@ class CartPage {
         console.log("hello")
         let totalPrice = JSON.parse(localStorage.getItem('totalPrice'))
         let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id
+        const createdTime = new Date().toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
         const cartCheckOutInfo = {
             "id": this.generateUniqueId(),
-            "createdTime": Date.now(),
+            "createdTime": createdTime,
             "products": [this.cartItems],
             "totalPrice": totalPrice,
             "orderUserId": currentUserId

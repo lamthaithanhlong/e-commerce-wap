@@ -15,8 +15,8 @@ class OrderPage {
         if (currentUser) {
             document.getElementById('username').textContent = "Welcome, " + currentUser.name + "!";
         } else {
-            document.getElementById('orders').textContent = "You are not allowed to access the page, Please login first.";
-            document.getElementById('logoutBtn').textContent = "Login"
+            document.getElementById('orders').textContent = "You are not allowed to access the page. Please login first.";
+            document.getElementById('logoutBtn').textContent = "Login";
             document.getElementById('username').textContent = "You are logged out. Please log in again.";
         }
     }
@@ -36,16 +36,55 @@ class OrderPage {
 
     displayOrders(orders) {
         const orderList = document.getElementById('orderList');
-        const orderUserId = JSON.parse(localStorage.getItem('currentUser')).id
+        const orderUserId = JSON.parse(localStorage.getItem('currentUser')).id;
 
-        const filteredOrders = orders.filter((order) => order.orderUserId === orderUserId);
+        const filteredOrders = orders.filter(order => order.orderUserId === orderUserId);
 
         orderList.innerHTML = '';
 
         filteredOrders.forEach(order => {
             const listItem = document.createElement('li');
-            const productsString = order.products.map(product => JSON.stringify(product)).join(', ');
-            listItem.textContent = `Order ID: ${order.id}, Created Time: ${order.createdTime}, Total Price: ${order.totalPrice}, Products: ${productsString}`;
+            listItem.classList.add('order-item');
+
+            const orderInfo = document.createElement('div');
+            orderInfo.classList.add('order-info');
+
+            const orderId = document.createElement('h3');
+            orderId.textContent = `Order ID: ${order.id}`;
+
+            const createdTime = document.createElement('p');
+            createdTime.textContent = `Created Time: ${order.createdTime}`;
+
+            const totalPrice = document.createElement('p');
+            totalPrice.textContent = `Total Price: ${order.totalPrice}`;
+
+            const products = document.createElement('ul');
+            products.classList.add('product-list');
+
+            order.products.forEach((product,index) => {
+                console.log("data",product);
+                const productItem = document.createElement('li');
+                productItem.classList.add('product-item');
+
+                const productName = document.createElement('h4');
+                productName.textContent = product.name;
+
+                const productImage = document.createElement('img');
+                productImage.src = product[index][1].image;
+
+                const productImage1 = document.createElement('img');
+                productImage.src = product[index][0].image;
+
+                productItem.appendChild(productName);
+                productItem.appendChild(productImage);
+                products.appendChild(productItem);
+            });
+
+            orderInfo.appendChild(orderId);
+            orderInfo.appendChild(createdTime);
+            orderInfo.appendChild(totalPrice);
+            listItem.appendChild(orderInfo);
+            listItem.appendChild(products);
             orderList.appendChild(listItem);
         });
     }
@@ -69,7 +108,7 @@ class OrderPage {
         const selectedButton = document.getElementById(sectionId + 'Btn');
         if (selectedButton) {
             selectedButton.classList.add('active');
-            localStorage.setItem('selectedButton', sectionId)
+            localStorage.setItem('selectedButton', sectionId);
         }
     }
 
@@ -130,5 +169,4 @@ class OrderPage {
         }
     }
 }
-
-new OrderPage();
+new OrderPage();  
