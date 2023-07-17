@@ -15,48 +15,48 @@
     "id": "002",
     "name": "Smartphone",
     "price": 500,
-    "image": "../images/smartphone.png"
+    "image": "https://images.unsplash.com/photo-1505156868547-9b49f4df4e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aXBob25lfGVufDB8fDB8fHww&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "003",
     "name": "Headphones",
     "price": 100,
-    "image": "../images/headphones.png"
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "004",
     "name": "Monitor",
     "price": 300,
-    "image": "../iages/monitor.png"
+    "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9uaXRvcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "005",
     "name": "Keyboard",
     "price": 50,
-    "image": "../images/keyboard.png"
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a2V5Ym9hcmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "006",
     "name": "Mouse",
     "price": 30,
-    "image": "./images/mouse.jpg"
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1400&q=60g"
   },
   {
     "id": "007",
     "name": "Micr0phone",
     "price": 80,
-    "image": "./images/mic.jpg"
+    "image": "https://plus.unsplash.com/premium_photo-1668390872454-181a08165472?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWljfGVufDB8fDB8fHww&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "009",
     "name": "Tablet",
     "price": 200,
-    "image": "images/tablet.png"
+    "image": "https://images.unsplash.com/photo-1527698266440-12104e498b76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGFibGV0fGVufDB8fDB8fHww&auto=format&fit=crop&w=1400&q=60"
   },
   {
     "id": "010",
     "name": "Printer",
     "price": 150,
-    "image": "images/printer.png"
+    "image": "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJpbnRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1400&q=60"
   }
 ]
