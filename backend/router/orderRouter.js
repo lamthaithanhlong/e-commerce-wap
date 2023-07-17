@@ -16,7 +16,8 @@ router.post('/submit',async(req,res,next) => {
     let createdTime = req.body.createdTime
     let products = req.body.products
     let totalPrice = req.body.totalPrice
-    await orderController.submitOrder(id,createdTime,products,totalPrice).then(data => {
+    let orderUserId = req.body.orderUserId
+    await orderController.submitOrder(id,createdTime,products,totalPrice,orderUserId).then(data => {
         res.send(data)
     }).catch(err => res.send(err))
 })

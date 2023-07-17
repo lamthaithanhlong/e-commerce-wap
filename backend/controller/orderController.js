@@ -9,14 +9,15 @@ class CartController {
     getOrders() {
         return data
     }
-    submitOrder(id,createdTime,products,totalPrice) {
+    submitOrder(id,createdTime,products,totalPrice,orderUserId) {
         let item = {
             id,
             createdTime,
             products: [
                 products
             ],
-            totalPrice
+            totalPrice,
+            orderUserId
         }
         return data
             .then((res) => {
