@@ -20,7 +20,7 @@ class CustomerController {
                         isSuccesful = true
                     }
                 })
-                return isSuccesful
+                return res
             }).catch(err => console.log(err))
     }
     register(id,name,username,phone,password) {

@@ -1,20 +1,62 @@
 [
-    {
+  {
     "id": "008",
     "name": "Camera",
-    "price": 150,
+    "price": 400,
     "image": "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
    },
   {
+    "id": "001",
+    "name": "Laptop",
+    "price": 700,
+    "image": "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFjYm9va3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+  },
+  {
+    "id": "002",
+    "name": "Smartphone",
+    "price": 500,
+    "image": "../images/smartphone.png"
+  },
+  {
+    "id": "003",
+    "name": "Headphones",
+    "price": 100,
+    "image": "../images/headphones.png"
+  },
+  {
+    "id": "004",
+    "name": "Monitor",
+    "price": 300,
+    "image": "../iages/monitor.png"
+  },
+  {
+    "id": "005",
+    "name": "Keyboard",
+    "price": 50,
+    "image": "../images/keyboard.png"
+  },
+  {
+    "id": "006",
+    "name": "Mouse",
+    "price": 30,
+    "image": "./images/mouse.jpg"
+  },
+  {
+    "id": "007",
+    "name": "Micr0phone",
+    "price": 80,
+    "image": "./images/mic.jpg"
+  },
+  {
     "id": "009",
-    "name": "Printer",
-    "price": 150,
-    "image": "../images/printer.jpg"
+    "name": "Tablet",
+    "price": 200,
+    "image": "images/tablet.png"
   },
   {
     "id": "010",
-    "name": "Tablet",
-    "price": 400,
-    "image": "./images/tablet.jpg"
+    "name": "Printer",
+    "price": 150,
+    "image": "images/printer.png"
   }
 ]

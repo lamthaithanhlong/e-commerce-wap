@@ -1,37 +1,56 @@
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  // Get the username and password values from the form
+class LoginPage {
+  constructor() {
+    this.init()
+  }
+  init() {
+    // this.submitLogin()
+    this.displayProducts()
+    this.actionPerform()
+  }
+  async submitLogin() {
+      // Get the username and password values from the form
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
   // Create an object with the username and password
   const data = {
-    username: username,
-    password: password
+    username: "john",
+    password: "123"
   };
-
-  // Send a POST request to the server for authentication
-  fetch('http://localhost:3000/customer/login', {
+  await fetch('http://localhost:3000/customer/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (response.ok) {
-      // Successful authentication, handle the response here
-      console.log('Authentication successful!');
-      Location.href="../"
+  }).then(res => console.log(res))
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+  }
 
-    } else {
-      // Authentication failed, handle the response here
-      console.log('Authentication failed!');
+  displayProducts() {
+        const productList = document.getElementById('product-list');
+        fetch('http://localhost:3000/product', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(user => {
+                console.log(user)
+            })
+            .catch(error => {
+                console.log('Error fetching user information:', error);
+            });
     }
-  })
-  .catch(error => {
-    // Handle any network or server errors here
-    console.log('An error occurred:', error);
-  });
-});
+  actionPerform() {
+    const self = this
+    
+    const testBtn = document.getElementById("testddd")
+    testBtn.addEventListener('click', function () {
+      self.submitLogin()
+    })
+  }
+}
+new LoginPage()
