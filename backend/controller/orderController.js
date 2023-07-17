@@ -20,7 +20,7 @@ class CartController {
         }
         return data
             .then((res) => {
-                res.product.push(item)
+                res.push(item)
                 fileSystem.saveFile = res
                 return res
             })
