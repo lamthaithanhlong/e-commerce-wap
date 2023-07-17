@@ -5,11 +5,9 @@ const data = fileSystem.getFile
 
 class productController {
   constructor() {}
-  // Get all products
   getAllProducts() {
     return data
   }
-// Remove a product by ID
 removeProduct(id) {
   return data
     .then((res) => {

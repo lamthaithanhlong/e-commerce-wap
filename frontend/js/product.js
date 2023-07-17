@@ -146,10 +146,7 @@ class ProductPage {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function () {
-                // Remove the token from the session storage
                 localStorage.removeItem('currentUser')
-
-                // Redirect to login page
                 window.location.href = 'login.html';
             });
         }

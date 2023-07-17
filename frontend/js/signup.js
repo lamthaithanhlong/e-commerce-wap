@@ -112,8 +112,6 @@ class SignUpPage {
         document.getElementById("getId").textContent =
           "Please enter a valid password. It must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit.";
       }
-
-      // Submit the form if validation passes
       if (isValid) {
         self.submitSignUp();
       }
