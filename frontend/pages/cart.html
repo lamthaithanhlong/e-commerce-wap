@@ -17,11 +17,19 @@
         <button id="logoutBtn">Logout</button>
       </div>
       <div id="cart" class="section">
-        <h2>List of cart</h2>
+        <h2>List of products in the cart</h2>
+        <div id="cart-items">
+          <!-- Cart items will be dynamically added here -->
         </div>
-      </div>      
+        <div class="cart-total">
+          <span>Total Quantity:</span>
+          <span id="totalQuantity">0</span>
+          <span>Total Price:</span>
+          <span id="totalPrice">$0.00</span>
+        </div>
+        <button id="checkoutBtn">Checkout</button>
       </div>
     </div>
   </body>
-  <script src="../js/product.js"></script>
+  <script src="../js/cart.js"></script>
 </html>
