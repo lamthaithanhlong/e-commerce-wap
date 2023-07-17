@@ -46,21 +46,33 @@ class CustomerController {
 
     register(id, name, username, phone, password) {
         const customerData = this.customerModel;
-        customerData.setId = id;
-        customerData.setName = name;
-        customerData.setUsername = username;
-        customerData.setPhone = phone;
-        customerData.setPassword = password;
         return data
             .then((res) => {
-                res.push(customerData);
-                fileSystem.saveFile = res;
+                const isIdExists = res.some((item) => item.id === id);
+                const isUsernameExists = res.some((item) => item.username === username);
+    
+                console.log(isIdExists && customerData.getId === id)
+                console.log(isUsernameExists && customerData.getUsername === username)
+                if (isIdExists && customerData.getId === id) {
+                    throw new Error('ID already exists. Please choose a different ID.');
+                } else if (isUsernameExists && customerData.getUsername === username) {
+                    throw new Error('Username already exists. Please choose a different username.');
+                } else {
+                    customerData.setId = id;
+                    customerData.setName = name;
+                    customerData.setUsername = username;
+                    customerData.setPhone = phone;
+                    customerData.setPassword = password;
+                    
+                    res.push(customerData);
+                    fileSystem.saveFile = res;
+                }
                 return res;
             })
             .catch((err) => {
-                console.log(err);
+                throw new Error(err);
             });
-    }
+    }    
 
     generateUser() {
         const newUserCount = 5;

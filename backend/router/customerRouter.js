@@ -3,29 +3,39 @@ const CustomerController = require('../controller/customerController')
 const customerController = new CustomerController()
 const router = express.Router()
 
-router.post('/login', async(req, res) => {
+router.post('/login', async (req, res) => {
     let username = req.body.username
     let password = req.body.password
     await customerController.login(username, password)
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+        .then(data => res.send(data))
+        .catch(err => res.send(err))
 })
 
-router.post('/register',async(req,res,next) => {
-    let id = req.body.id
-    let name = req.body.name
-    let username = req.body.username
-    let phone = req.body.phone
-    let password = req.body.password
-    await customerController.register(id,name,username,phone,password)
-    .then(data => {res.send(data)})
-    .catch(err => res.send(err))
-})
+router.post('/register', async (req, res, next) => {
+    let id = req.body.id;
+    let name = req.body.name;
+    let username = req.body.username;
+    let phone = req.body.phone;
+    let password = req.body.password;
+    try {
+        const data = await customerController.register(
+            id,
+            name,
+            username,
+            phone,
+            password
+        );
+        res.send(data);
+    } catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+});
 
-router.get('/', async(req, res) => {
+
+router.get('/', async (req, res) => {
     await customerController.listCustomer()
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+        .then(data => res.send(data))
+        .catch(err => res.send(err))
 })
 
 module.exports = router
