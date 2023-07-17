@@ -7,15 +7,18 @@ const app = express();
 
 app.use(cors())
 app.use(express.json())
-app.use('/product',ProductRouter)
-app.use('/order',OrderRouter)
+app.use('/product', ProductRouter)
+app.use('/order', OrderRouter)
 app.use('/customer', CustomerRouter)
 
 app.use((req, res, next) => {
-res.status(404).json({ error: req.url + ' API not supported!' });
+    res.status(404).json({ error: req.url + ' API not supported!' });
 });
 app.use((err, req, res, next) => {
-res.status(500).json({ error: 'Something is wrong! Try later' }); 
+    res.status(500).json({ error: 'Something is wrong! Try later' });
+});
+app.use((err, req, res, next) => {
+    res.status(401).json({ error: 'Wrong input' });
 });
 
 app.listen("3000", () => {

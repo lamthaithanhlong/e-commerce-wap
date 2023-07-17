@@ -3,14 +3,12 @@ class LoginPage {
     this.init()
   }
   init() {
-    // this.submitLogin()
-    this.actionPerform()
+    this.attachEventListeners()
   }
   submitLogin() {
     const statusResponse = document.getElementById('statusResponse')
     const username = document.getElementById('username').value; // Set the desired username
-    const password = document.getElementById('password').value; // Set the desired password
-  
+    const password = document.getElementById('password').value; // Set the desired password 
     const data = {
       "username": username,
       "password": password
@@ -37,8 +35,9 @@ class LoginPage {
             phone: res.phone,
             password: res.password
         }
+        console.log(res)
         if(res.id != null || res.id != undefined) {
-          localStorage.clear()
+          localStorage.removeItem('currentUser')
           localStorage.setItem('currentUser',JSON.stringify(currentUser))
           window.location.assign('home.html')
         } else {
@@ -50,10 +49,10 @@ class LoginPage {
         console.log('Error occurred during login:', error);
       });
   }  
-  actionPerform() {
+  attachEventListeners() {
     const self = this
     
-    const testBtn = document.getElementById("testddd")
+    const testBtn = document.getElementById("submitLogin")
     testBtn.addEventListener('click', function () {
       self.submitLogin()
       console.log(localStorage.getItem('cartItems'))
