@@ -51,8 +51,16 @@ class ProductPage {
         // Retrieve existing cart items from localStorage
         const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        // Add the new product to the cart
-        existingCartItems.push(product);
+        // Check if the product already exists in the cart
+        const existingProductIndex = existingCartItems.findIndex((item) => item.id === product.id);
+        if (existingProductIndex !== -1) {
+            // If the product exists, increase the quantity
+            existingCartItems[existingProductIndex].quantity++;
+        } else {
+            // If the product does not exist, add it to the cart with quantity 1
+            product.quantity = 1;
+            existingCartItems.push(product);
+        }
 
         // Save the updated cart items to localStorage
         localStorage.setItem('cartItems', JSON.stringify(existingCartItems));

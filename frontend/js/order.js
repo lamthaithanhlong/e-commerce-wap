@@ -5,6 +5,9 @@ class OrderPage {
     init() {
         this.attachEventListeners();
     }
+    loadDataFromLocalStorage() {
+        localStorage.getItem()
+    }
     switchSection(sectionId) {
         const sections = document.getElementsByClassName('section');
         for (let i = 0; i < sections.length; i++) {
