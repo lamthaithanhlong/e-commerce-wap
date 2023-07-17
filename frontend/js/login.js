@@ -6,8 +6,9 @@ class LoginPage {
     this.attachEventListeners()
   }
   submitLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const statusResponse = document.getElementById('statusResponse')
+    const username = document.getElementById('username').value; // Set the desired username
+    const password = document.getElementById('password').value; // Set the desired password 
     const data = {
       "username": username,
       "password": password

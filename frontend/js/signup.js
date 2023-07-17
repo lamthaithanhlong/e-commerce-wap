@@ -8,7 +8,6 @@ class SignUpPage {
     this.validateForm();
     this.generateUniqueID().then((nextId) => {
       console.log(nextId);
-      document.getElementById('getId').textContent = "CurrentID: " + nextId;
     });
   }
 
