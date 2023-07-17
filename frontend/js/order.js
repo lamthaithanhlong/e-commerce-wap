@@ -1,62 +1,9 @@
-class ProductPage {
+class OrderPage {
     constructor() {
-        this.init();
+        this.init()
     }
-
     init() {
-        this.displayProducts();
         this.attachEventListeners();
-    }
-
-    displayProducts() {
-        const productList = document.getElementById('product-list');
-        fetch('http://localhost:3000/product', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(user => {
-                user.forEach(product => {
-                    const productItem = document.createElement('div');
-                    productItem.classList.add('product-item');
-
-                    const image = document.createElement('img');
-                    image.src = product.imageUrl;
-                    image.alt = product.name;
-
-                    const name = document.createElement('h3');
-                    name.textContent = product.name;
-
-                    const addButton = document.createElement('button');
-                    addButton.textContent = 'Add to Cart';
-                    addButton.addEventListener('click', () => {
-                        this.addToCart(product);
-                    });
-
-                    productItem.appendChild(image);
-                    productItem.appendChild(name);
-                    productItem.appendChild(addButton);
-
-                    productList.appendChild(productItem);
-                });
-            })
-            .catch(error => {
-                console.log('Error fetching user information:', error);
-            });
-    }
-    addToCart(product) {
-        console.log('Added to cart:', product);
-
-        // Retrieve existing cart items from localStorage
-        const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-        // Add the new product to the cart
-        existingCartItems.push(product);
-
-        // Save the updated cart items to localStorage
-        localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
     }
     switchSection(sectionId) {
         const sections = document.getElementsByClassName('section');
@@ -126,5 +73,4 @@ class ProductPage {
         }
     }
 }
-
-new ProductPage();
+new OrderPage()

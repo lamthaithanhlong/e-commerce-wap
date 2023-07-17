@@ -57,6 +57,14 @@ class HomePage {
   attachEventListeners() {
     const self = this;
 
+    const homeBtn = document.getElementById('homeBtn');
+    if (homeBtn) {
+        homeBtn.addEventListener('click', function () {
+            window.location.href = 'home.html';
+            self.switchSection('home');
+        });
+    }
+
     const productsBtn = document.getElementById('productsBtn');
     if (productsBtn) {
       productsBtn.addEventListener('click', function() {
