@@ -8,19 +8,18 @@ class CustomerController {
     constructor() {}
     listCustomer() {
         return data
-                .then(res => res).catch(err => console.log(err))
-        }
+    }
     login(username,password) {
     return data
             .then(res => {
-                let isSuccesful = false
-                res.customer.map((item) => {
+                let target = {}
+                res.map((item) => {
                     console.log(item.username == username && item.password == password)
                     if(item.username == username && item.password == password) {
-                        isSuccesful = true
+                        target = item
                     }
                 })
-                return res
+                return target
             }).catch(err => console.log(err))
     }
     register(id,name,username,phone,password) {
@@ -33,7 +32,7 @@ class CustomerController {
         }
         return data
             .then((res) => {
-                res.customer.push(item)
+                res.push(item)
                 fileSystem.saveFile = res
                 return res
             })
