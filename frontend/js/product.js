@@ -40,6 +40,9 @@ class ProductPage {
                     const name = document.createElement('h3');
                     name.textContent = product.name;
 
+                    const price = document.createElement('p');
+                    price.textContent = `Price: ${product.price}`;
+
                     const addButton = document.createElement('button');
                     addButton.textContent = 'Add to Cart';
                     addButton.addEventListener('click', () => {
@@ -47,9 +50,9 @@ class ProductPage {
                     });
 
                     productItem.appendChild(image);
+                    productItem.appendChild(price);
                     productItem.appendChild(name);
                     productItem.appendChild(addButton);
-
                     productList.appendChild(productItem);
                 });
             })
