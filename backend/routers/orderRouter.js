@@ -1,4 +1,4 @@
-const OrderController = require('../controller/orderController')
+const OrderController = require('../controllers/orderController')
 const express = require('express');
 const options = {
     "caseSensitive":false

@@ -1,6 +1,6 @@
-const ProductManager = require('../model/product');
+const ProductManager = require('../models/product');
 const FileSystem = require('../util/fileSystem')
-const fileSystem = new FileSystem('../data/products.json');
+const fileSystem = new FileSystem('../datas/products.json');
 const data = fileSystem.getFile
 
 class productController {
