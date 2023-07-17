@@ -70,9 +70,6 @@ class OrderPage {
                 productName.textContent = product.name;
 
                 const productImage = document.createElement('img');
-                productImage.src = product[index][1].image;
-
-                const productImage1 = document.createElement('img');
                 productImage.src = product[index][0].image;
 
                 productItem.appendChild(productName);
@@ -161,7 +158,7 @@ class OrderPage {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function () {
                 // Remove the token from the session storage
-                // sessionStorage.removeItem("token");
+                localStorage.removeItem('currentUser')
 
                 // Redirect to login page
                 window.location.href = 'login.html';

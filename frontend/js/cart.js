@@ -18,7 +18,7 @@ class CartPage {
             document.getElementById('username').textContent = "Welcome, " + currentUser.name + "!";
         } else {
             document.getElementById('cart').textContent = "You are not allowed to access the page, Please login first.";
-            document.getElementById('logoutBtn').textContent = "Login"
+            document.getElementById('logoutBtn').textContent = "Login";
             document.getElementById('username').textContent = "You are logged out. Please log in again.";
         }
     }
@@ -40,14 +40,15 @@ class CartPage {
                 total += item.price * item.quantity;
                 quantity += item.quantity;
             });
-            if (quantity != 0 && total != 0) {
-                totalPriceElement.textContent = `${total.toFixed(2)}`;
+
+            if (quantity !== 0 && total !== 0) {
+                totalPriceElement.textContent = total.toFixed(2);
                 totalQuantityElement.textContent = quantity.toString();
             } else {
-                document.getElementById('cart-total').textContent = "You don't have any items in the cart. Please take your time to add more items before proceeding with your purchase."
+                document.getElementById('cart-total').textContent = "You don't have any items in the cart. Please take your time to add more items before proceeding with your purchase.";
             }
         }
-        localStorage.setItem('totalPrice', JSON.stringify(totalPriceElement.textContent));
+        localStorage.setItem('totalPrice', totalPriceElement.textContent);
     }
 
     updateCartItemQuantity(index, quantity) {
@@ -58,9 +59,8 @@ class CartPage {
     }
 
     saveCartItems() {
-        console.log("hello")
-        let totalPrice = JSON.parse(localStorage.getItem('totalPrice'))
-        let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id
+        let totalPrice = document.getElementById('totalPrice').textContent;
+        let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id;
         const createdTime = new Date().toLocaleString('en-US', {
             year: 'numeric',
             month: 'long',
@@ -70,12 +70,13 @@ class CartPage {
             second: 'numeric',
         });
         const cartCheckOutInfo = {
-            "id": this.generateUniqueId(),
-            "createdTime": createdTime,
-            "products": [this.cartItems],
-            "totalPrice": totalPrice,
-            "orderUserId": currentUserId
-        }
+            id: this.generateUniqueId(),
+            createdTime: createdTime,
+            products: [this.cartItems],
+            totalPrice: totalPrice,
+            orderUserId: currentUserId
+        };
+
         fetch('http://localhost:3000/order/submit', {
             method: 'POST',
             headers: {
@@ -85,17 +86,18 @@ class CartPage {
         })
             .then(response => {
                 if (response.ok) {
-                    return console.log(response.json());
+                    return response.json();
                 } else {
-                    throw new Error('Login request failed');
+                    throw new Error('Checkout request failed');
                 }
             })
             .then(data => {
                 console.log(data);
             })
             .catch(error => {
-                console.log('Error occurred during login:', error);
+                console.log('Error occurred during checkout:', error);
             });
+
         localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
         localStorage.setItem('cartCheckOutItems', JSON.stringify(cartCheckOutInfo));
     }
@@ -136,6 +138,7 @@ class CartPage {
             cartItemsContainer.appendChild(cartItemElement);
         });
     }
+
     switchSection(sectionId) {
         const sections = document.getElementsByClassName('section');
         for (let i = 0; i < sections.length; i++) {
@@ -155,7 +158,7 @@ class CartPage {
         const selectedButton = document.getElementById(sectionId + 'Btn');
         if (selectedButton) {
             selectedButton.classList.add('active');
-            localStorage.setItem('selectedButton', sectionId)
+            localStorage.setItem('selectedButton', sectionId);
         }
     }
 
@@ -168,18 +171,19 @@ class CartPage {
             }
         }
     }
+
     attachEventListeners() {
         const self = this;
 
-        const checkoutBtn = document.getElementById('checkoutBtn')
+        const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', function () {
-                self.saveCartItems()
-                localStorage.removeItem("cartCheckOutItems")
-                localStorage.removeItem("cartItems")
+                self.saveCartItems();
+                localStorage.removeItem("cartCheckOutItems");
+                localStorage.removeItem("cartItems");
                 window.location.href = 'cart.html';
                 self.switchSection('cart');
-            })
+            });
         }
 
         const homeBtn = document.getElementById('homeBtn');
@@ -217,14 +221,10 @@ class CartPage {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function () {
-                // Remove the token from the session storage
-                // sessionStorage.removeItem("token");
-
-                // Redirect to login page
+                localStorage.removeItem('currentUser');
                 window.location.href = 'login.html';
             });
         }
     }
 }
-
 new CartPage();
