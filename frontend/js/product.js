@@ -4,6 +4,7 @@ class ProductPage {
     }
 
     init() {
+        this.cartItems = JSON.parse(localStorage.getItem('cartItems'))
         this.displayProducts();
         this.attachEventListeners();
     }
@@ -48,21 +49,17 @@ class ProductPage {
     addToCart(product) {
         console.log('Added to cart:', product);
 
-        // Retrieve existing cart items from localStorage
         const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const existingProduct = existingCartItems.find((item) => item.id === product.id);
 
-        // Check if the product already exists in the cart
-        const existingProductIndex = existingCartItems.findIndex((item) => item.id === product.id);
-        if (existingProductIndex !== -1) {
-            // If the product exists, increase the quantity
-            existingCartItems[existingProductIndex].quantity++;
+        if (existingProduct) {
+            existingProduct.quantity++;
+            alert(`New item added to the cart: ${existingProduct.name} (Quantity: ${existingProduct.quantity})`);
         } else {
-            // If the product does not exist, add it to the cart with quantity 1
             product.quantity = 1;
             existingCartItems.push(product);
+            alert(`New item added to the cart: ${product.name} (Quantity: ${product.quantity})`);
         }
-
-        // Save the updated cart items to localStorage
         localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
     }
     switchSection(sectionId) {

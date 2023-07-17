@@ -1,4 +1,4 @@
-class App {
+class CartPage {
     constructor() {
         this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         this.init();
@@ -12,8 +12,6 @@ class App {
     }
 
     fetchUserInformation() {
-        // Fetch user information and update the UI
-        // ...
     }
 
     calculateCartTotal() {
@@ -161,4 +159,4 @@ class App {
     }
 }
 
-new App();
+new CartPage();
