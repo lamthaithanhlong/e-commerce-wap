@@ -1,7 +1,7 @@
 const Order = require('../models/order')
 const FileSystem = require('../util/fileSystem')
 const order = new Order();
-const fileSystem = new FileSystem('../datas/carts.json')
+const fileSystem = new FileSystem('../data/carts.json')
 const data = fileSystem.getFile
 
 class CartController {

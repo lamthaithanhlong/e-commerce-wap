@@ -40,12 +40,10 @@ class LoginPage {
           localStorage.removeItem('currentUser')
           localStorage.setItem('currentUser',JSON.stringify(currentUser))
           window.location.assign('home.html')
-        } else {
-          console.log("invalid login")
-          statusResponse.textContent = "The credential is not valid, Please try again"
         }
       })
       .catch(error => {
+        statusResponse.textContent = "The credential is not valid, Please try again"
         console.log('Error occurred during login:', error);
       });
   }  
@@ -55,7 +53,6 @@ class LoginPage {
     const testBtn = document.getElementById("submitLogin")
     testBtn.addEventListener('click', function () {
       self.submitLogin()
-      console.log(localStorage.getItem('cartItems'))
     })
   }
 }

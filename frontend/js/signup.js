@@ -53,8 +53,9 @@ class SignUpPage {
           if (response.ok) {
             window.location.assign('login.html');
             return response.json();
-          } else {
+          } else if(response.status == 401) {
             document.getElementById("headerMessage").textContent = "Whoos! it look like you have issue, someone you this username";
+          } else {
             return Promise.reject(new Error('Signup request failed'));
           }
         })

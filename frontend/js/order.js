@@ -61,19 +61,23 @@ class OrderPage {
             const products = document.createElement('ul');
             products.classList.add('product-list');
 
-            order.products.forEach((product,index) => {
-                console.log("data",product);
+            order.products[0][0].forEach(product => {
                 const productItem = document.createElement('li');
                 productItem.classList.add('product-item');
 
                 const productName = document.createElement('h4');
                 productName.textContent = product.name;
 
-                const productImage = document.createElement('img');
-                productImage.src = product[index][0].image;
+                const productPrice = document.createElement('p');
+                productPrice.textContent = `Price: $${product.price}`;
+
+                const productQuantity = document.createElement('p');
+                productQuantity.textContent = `Quantity: ${product.quantity}`;
 
                 productItem.appendChild(productName);
-                productItem.appendChild(productImage);
+                productItem.appendChild(productPrice);
+                productItem.appendChild(productQuantity);
+
                 products.appendChild(productItem);
             });
 
@@ -81,8 +85,48 @@ class OrderPage {
             orderInfo.appendChild(createdTime);
             orderInfo.appendChild(totalPrice);
             listItem.appendChild(orderInfo);
-            listItem.appendChild(products);
             orderList.appendChild(listItem);
+
+            listItem.addEventListener('click', () => {
+                this.openOrderModal(order);
+            });
+        });
+    }
+
+    openOrderModal(order) {
+        const modal = document.getElementById('orderModal');
+        const modalProductDetails = document.getElementById('modalProductDetails');
+        modalProductDetails.innerHTML = '';
+
+        order.products[0][0].forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+
+            const productName = document.createElement('h4');
+            productName.textContent = product.name;
+
+            const productPrice = document.createElement('p');
+            productPrice.textContent = `Price: $${product.price}`;
+
+            const productQuantity = document.createElement('p');
+            productQuantity.textContent = `Quantity: ${product.quantity}`;
+
+            const productImage = document.createElement('img');
+            productImage.src = product.image;
+
+            productItem.appendChild(productImage);
+            productItem.appendChild(productName);
+            productItem.appendChild(productPrice);
+            productItem.appendChild(productQuantity);
+
+            modalProductDetails.appendChild(productItem);
+        });
+
+        modal.style.display = 'block';
+
+        const closeBtn = document.getElementsByClassName('close')[0];
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
         });
     }
 
@@ -163,4 +207,5 @@ class OrderPage {
         }
     }
 }
-new OrderPage();  
+
+new OrderPage();

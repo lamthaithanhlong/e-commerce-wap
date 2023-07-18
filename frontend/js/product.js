@@ -61,9 +61,10 @@ class ProductPage {
             });
     }
     addToCart(product) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         console.log('Added to cart:', product);
 
-        const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const existingCartItems = JSON.parse(localStorage.getItem('cartItems'+currentUser.id)) || [];
         const existingProduct = existingCartItems.find((item) => item.id === product.id);
 
         if (existingProduct) {
@@ -74,7 +75,7 @@ class ProductPage {
             existingCartItems.push(product);
             alert(`New item added to the cart: ${product.name} (Quantity: ${product.quantity})`);
         }
-        localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
+        localStorage.setItem('cartItems'+currentUser.id, JSON.stringify(existingCartItems));
     }
     switchSection(sectionId) {
         const sections = document.getElementsByClassName('section');

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const Customer = require('../models/customer');
 const FileSystem = require('../util/fileSystem');
-const fileSystem = new FileSystem('../datas/customers.json');
+const fileSystem = new FileSystem('../data/customers.json');
 const data = fileSystem.getFile;
 
 class CustomerController {

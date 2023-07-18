@@ -1,8 +1,14 @@
 class CartPage {
     constructor() {
-        this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            this.cartItems = JSON.parse(localStorage.getItem('cartItems' + currentUser.id)) || [];
+        } else {
+            this.cartItems = [];
+        }
         this.init();
     }
+
 
     init() {
         this.getUserInformation();
@@ -24,7 +30,8 @@ class CartPage {
     }
 
     generateUniqueId() {
-        const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const existingCartItems = JSON.parse(localStorage.getItem('cartItems' + currentUser.id)) || [];
         const newId = (existingCartItems.length + 1).toString().padStart(3, '0');
         return newId;
     }
@@ -59,6 +66,7 @@ class CartPage {
     }
 
     saveCartItems() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let totalPrice = document.getElementById('totalPrice').textContent;
         let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id;
         const createdTime = new Date().toLocaleString('en-US', {
@@ -98,8 +106,8 @@ class CartPage {
                 console.log('Error occurred during checkout:', error);
             });
 
-        localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-        localStorage.setItem('cartCheckOutItems', JSON.stringify(cartCheckOutInfo));
+        localStorage.setItem('cartItems' + currentUser.id, JSON.stringify(this.cartItems));
+        localStorage.setItem('cartCheckOutItems' + currentUser.id, JSON.stringify(cartCheckOutInfo));
     }
 
     renderCartItems() {
@@ -174,13 +182,14 @@ class CartPage {
 
     attachEventListeners() {
         const self = this;
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', function () {
                 self.saveCartItems();
-                localStorage.removeItem("cartCheckOutItems");
-                localStorage.removeItem("cartItems");
+                localStorage.removeItem("cartCheckOutItems" + currentUser.id);
+                localStorage.removeItem("cartItems" + currentUser.id);
                 window.location.href = 'cart.html';
                 self.switchSection('cart');
             });
