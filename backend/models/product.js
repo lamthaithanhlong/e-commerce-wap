@@ -19,7 +19,8 @@ class Product {
     get getPrice() {return this.price;}
     get getImage() {return this.image;}
     saveProduct(updateContent) {
-        fileSystem.saveFile(JSON.stringify(updateContent))
+        fileSystem.saveFile = updateContent
     }
+    getProduct() {return fileSystem.getFile}
 }
 module.exports = Product

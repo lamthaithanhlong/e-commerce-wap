@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt');
 const Customer = require('../models/customer');
-const FileSystem = require('../util/fileSystem');
-const fileSystem = new FileSystem('../data/customers.json');
-const data = fileSystem.getFile;
+const customer = new Customer()
 
 class CustomerController {
     constructor() {
@@ -16,10 +14,11 @@ class CustomerController {
     }
 
     listCustomer() {
-        return data;
+        return customer.getCustomer();
     }
 
     login(username, password) {
+        const data = customer.getCustomer()
         return data
             .then((res) => {
                 return res.find((item) => item.username === username && bcrypt.compareSync(password, item.password));
@@ -28,6 +27,7 @@ class CustomerController {
     }
 
     register(id, name, username, phone, password) {
+        const data = customer.getCustomer()
         const hashPassword = bcrypt.hashSync(password, 10);
         const customerData = { id, name, username, phone, password: hashPassword };
 
@@ -41,7 +41,7 @@ class CustomerController {
                 }
 
                 res.push(customerData);
-                fileSystem.saveFile = res;
+                customer.saveCustomer(res);
                 return res;
             })
             .catch((err) => {
@@ -50,6 +50,7 @@ class CustomerController {
     }
 
     generateUser() {
+        const data = customer.getCustomer()
         const newUserCount = 5;
         const newUserList = [];
         const password = "admin123";
@@ -79,7 +80,7 @@ class CustomerController {
         return data
             .then((res) => {
                 res.push(...newUserList);
-                fileSystem.saveFile = res;
+                customer.saveCustomer(res);
                 return res;
             })
             .catch((err) => {

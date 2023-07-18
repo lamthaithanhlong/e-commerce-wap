@@ -53,13 +53,12 @@ class SignUpPage {
           if (response.ok) {
             window.location.assign('login.html');
             return response.json();
-          } else if(response.status == 401) {
-            document.getElementById("headerMessage").textContent = "Whoos! it look like you have issue, someone you this username";
           } else {
             return Promise.reject(new Error('Signup request failed'));
           }
         })
         .catch(error => {
+          alert("Whoos! it look like you have issue, someone you this username");
           console.log('Error occurred during signup:', error);
           throw error;
         });
@@ -94,23 +93,22 @@ class SignUpPage {
 
       if (!nameRegex.test(nameInput.value.trim())) {
         isValid = false;
-        document.getElementById("headerMessage").textContent = "Please enter a valid name. Only allow letters and spaces in the name";
+        alert("Please enter a valid name. Only allow letters and spaces in the name");
       }
 
       if (!usernameRegex.test(usernameInput.value.trim())) {
         isValid = false;
-        document.getElementById("getId").textContent = "Please enter a valid username. Only allow alphanumeric characters and underscores in the username";
+        alert("Please enter a valid username. Only allow alphanumeric characters and underscores in the username");
       }
 
       if (!phoneRegex.test(phoneInput.value.trim())) {
         isValid = false;
-        document.getElementById("headerMessage").textContent = "Please enter a valid phone number. Require exactly 10 digits for the phone number";
+        alert("Please enter a valid phone number. Require exactly 10 digits for the phone number");
       }
 
       if (!passwordRegex.test(passwordInput.value)) {
         isValid = false;
-        document.getElementById("getId").textContent =
-          "Please enter a valid password. It must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit.";
+        alert("Please enter a valid password. It must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit.");
       }
       if (isValid) {
         self.submitSignUp();

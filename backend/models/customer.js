@@ -1,3 +1,5 @@
+const FileSystem = require('../util/fileSystem');
+const fileSystem = new FileSystem('../data/customers.json');
 const bcrypt = require('bcrypt');
 class Customer {
     constructor(id, name, username, phone, password) {
@@ -40,5 +42,9 @@ class Customer {
             password: this.getPassword,
         }
     }
+    saveCustomer(updateContent) {
+        fileSystem.saveFile = updateContent
+    }
+    getCustomer() {return fileSystem.getFile}
 }
 module.exports = Customer

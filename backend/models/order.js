@@ -1,3 +1,6 @@
+const FileSystem = require('../util/fileSystem')
+const fileSystem = new FileSystem('../data/carts.json')
+
 class Order {
     constructor(id,createdTime,products,totalPrice) {
         this.id = id;
@@ -27,5 +30,9 @@ class Order {
         this.setTotalPrice = totalPrice
         return this.getId
     }
+    saveOrder(updateContent) {
+        fileSystem.saveFile = updateContent
+    }
+    getOrder() {return fileSystem.getFile}
 }
 module.exports = Order
