@@ -16,6 +16,9 @@ class CartPage {
         this.calculateCartTotal();
         this.renderCartItems();
         this.highlightSelectedButton();
+        this.generateUniqueID().then((nextId) => {
+            console.log(nextId);
+        });
     }
 
     getUserInformation() {
@@ -29,11 +32,21 @@ class CartPage {
         }
     }
 
-    generateUniqueId() {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        const existingCartItems = JSON.parse(localStorage.getItem('cartItems' + currentUser.id)) || [];
-        const newId = (existingCartItems.length + 1).toString().padStart(3, '0');
-        return newId;
+    generateUniqueID() {
+        return fetch('http://localhost:3000/order')
+            .then(response => response.json())
+            .then(data => {
+                const maxId = data.reduce((max, customer) => {
+                    const idNumber = parseInt(customer.id.substring(1));
+                    return idNumber > max ? idNumber : max;
+                }, 0);
+                const nextId = `${String(maxId + 1).padStart(3, '0')}`;
+                return nextId;
+            })
+            .catch(error => {
+                console.log('Error occurred:', error);
+                throw error;
+            });
     }
 
     calculateCartTotal() {
@@ -69,45 +82,51 @@ class CartPage {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let totalPrice = document.getElementById('totalPrice').textContent;
         let currentUserId = JSON.parse(localStorage.getItem('currentUser')).id;
-        const createdTime = new Date().toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-        });
-        const cartCheckOutInfo = {
-            id: this.generateUniqueId(),
-            createdTime: createdTime,
-            products: [this.cartItems],
-            totalPrice: totalPrice,
-            orderUserId: currentUserId
-        };
 
-        fetch('http://localhost:3000/order/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cartCheckOutInfo)
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Checkout request failed');
-                }
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.log('Error occurred during checkout:', error);
+        this.generateUniqueID().then((nextId) => {
+            const createdTime = new Date().toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
             });
+            const cartCheckOutInfo = {
+                id: nextId,
+                createdTime: createdTime,
+                products: [this.cartItems],
+                totalPrice: totalPrice,
+                orderUserId: currentUserId
+            };
 
-        localStorage.setItem('cartItems' + currentUser.id, JSON.stringify(this.cartItems));
-        localStorage.setItem('cartCheckOutItems' + currentUser.id, JSON.stringify(cartCheckOutInfo));
+            fetch('http://localhost:3000/order/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cartCheckOutInfo)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Checkout request failed');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.log('Error occurred during checkout:', error);
+                });
+        })
+        .then(() => {
+            localStorage.setItem('cartItems' + currentUser.id, JSON.stringify(this.cartItems));
+        })
+        .finally(() => {
+            localStorage.removeItem("cartItems" + currentUser.id);
+        }).catch((err) => console.log(err))
     }
 
     renderCartItems() {
@@ -182,16 +201,11 @@ class CartPage {
 
     attachEventListeners() {
         const self = this;
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', function () {
                 self.saveCartItems();
-                localStorage.removeItem("cartCheckOutItems" + currentUser.id);
-                localStorage.removeItem("cartItems" + currentUser.id);
-                window.location.href = 'cart.html';
-                self.switchSection('cart');
             });
         }
 
