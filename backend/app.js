@@ -17,9 +17,6 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Something is wrong! Try later' });
 });
-app.use((err, req, res, next) => {
-    res.status(401).json({ error: 'Wrong input' });
-});
 
 app.listen("3000", () => {
     console.log("listening on 3000")
