@@ -9,8 +9,12 @@ class CustomerController {
     }
 
     init() {
-        this.generateUser();
-        console.log("Auto generate default users");
+        this.listCustomer().then(data => {
+            if(data == '') {
+                this.generateUser()
+                console.log("Auto generate default user if empty")
+            }
+        })
     }
 
     listCustomer() {
